@@ -1,0 +1,4 @@
+{
+    "ignore":["schemas/*"],
+    "exec" : "node app.js"
+}
