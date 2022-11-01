@@ -68,8 +68,7 @@ app.delete('/posts/delete/:option/:content', async (req, res) => {
         if (req.body.option == 'title') { 
             options = [{ title : new RegExp(req.body.content) }]
         } 
-        const deletePosts = await Posts.deleteMany({ $or: options });
-        res.send('Successfully Deleted!');
+        const deletePosts = await Posts.deleteOne({ $or: options });
         return res.status(200).json(deletePosts);
     } catch(err) {
         return res.status(400).json({error : err});
@@ -77,9 +76,28 @@ app.delete('/posts/delete/:option/:content', async (req, res) => {
 });
 
 //제목으로 수정 다 수정할 수 있게 해야하나..?
-//수정 중
-app.put('/posts/update/:title', async (req, res) => {
-    const wantToupdate = await Posts.updateOne({ title : req.body.title } , { contents : res.body.contents });
-    console.log(wantToupdate);
-    res.send('')
+app.put('/posts/update/:option/:content/:updatecontent', async (req, res) => {
+    try { 
+        let options = []
+        let updateContent = []
+        console.log(req.body);
+        if (req.body.option === 'title') { 
+            options = { title : req.body.content };
+            updateContent = { title : req.body.updatecontent };
+        } else if (req.body.option === 'contents') {
+            options = { contents : req.body.content }
+            updateContent = { contents : req.body.updatecontent };
+        } else if (req.body.option === 'img') {
+            options = { img : req.body.content }
+            updateContent = { img : req.body.updatecontent };
+        } else if (req.body.option === 'location') {
+            options = { location : req.body.content }
+            updateContent = { location : req.body.content };
+        }
+        console.log(updateContent);
+        const updatePosts = await Posts.updateOne( options ,  {$set : updateContent} );
+        return res.status(200).json(updatePosts);
+    } catch(err) {
+        return res.status(400).json({error : err});
+    }
 });
