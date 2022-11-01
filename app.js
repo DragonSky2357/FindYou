@@ -25,34 +25,7 @@ app.get("/posts", async (req, res) => {
     
 });
 
-//http://localhost:3000/posts/search?option=검색 카테고리&content=검색 내용
-//query 형식
-app.get("/posts/search/query", async (req, res) => {
-    try { 
-        let options = []
-        console.log(req.param.option);
-        if (req.query.option == 'title') { 
-            options = [{ title : new RegExp(req.query.content) }]
-        } else if (req.query.option == 'contents') {
-            options = [{ contents : new RegExp(req.query.content) }]
-        } else if (req.query.option == 'uploadDate') {
-            options = [{ uploadDate : new RegExp(req.query.content) }]
-        } else if (req.query.option == 'title+content+uploadDate') {
-            options = [
-                { title : new RegExp(req.query.content) },
-                { contents : new RegExp(req.query.content) },
-                { uploadDate : new RegExp(req.query.content) },
-            ]
-        } 
-        const searchPosts = await Posts.find({ $or: options });
-        return res.status(200).json(searchPosts);
-    } catch(err) {
-        return res.status(400).json({error : err});
-    }
-});
-
-//param
-//http://localhost:3000/posts/search/:param
+//http://localhost:3000/posts/search/:option/:content
 app.get("/posts/search/:option/:content", async (req, res) => {
     try { 
         let options = []
@@ -86,34 +59,20 @@ app.post("/posts/register", async (req, res) => {
     }
 });
 
-//글 제목으로 삭제 postid도 추가?
 //http://localhost:3000/posts/delete/:title
-app.delete('/posts/delete/:title', async (req, res) => {
+//로그인한 작성자와 작성자가 일치하면 작성글 중 제목으로 삭제
+//작성자랑 제목을 가져와야하나?
+app.delete('/posts/delete/:option/:content', async (req, res) => {
     try { 
         let options = []
         if (req.body.option == 'title') { 
             options = [{ title : new RegExp(req.body.content) }]
-        } else if (req.body.option == 'contents') {
-            options = [{ contents : new RegExp(req.body.content) }]
-        } else if (req.body.option == 'uploadDate') {
-            options = [{ uploadDate : new RegExp(req.body.content) }]
-        } else if (req.query.option == 'title+content+uploadDate') {
-            options = [
-                { title : new RegExp(req.body.content) },
-                { contents : new RegExp(req.body.content) },
-                { uploadDate : new RegExp(req.body.content) },
-            ]
         } 
-        await Posts.deleteMany({ $or: options });
-        return res.status(200).json(searchPosts);
+        const deletePosts = await Posts.deleteMany({ $or: options });
+        res.send('Successfully Deleted!');
+        return res.status(200).json(deletePosts);
     } catch(err) {
         return res.status(400).json({error : err});
-    }
-    try {
-        await Posts.deleteMany({ title : req.body.title });
-        res.send('Successfully Deleted!');
-    } catch(err) {
-        return res.status(500).json({error : err});
     }
 });
 
