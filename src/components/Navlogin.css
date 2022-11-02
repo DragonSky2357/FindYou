@@ -1,0 +1,46 @@
+
+
+body{
+   border-bottom:2px solid #47B5FF;
+   border-top:2px solid #47B5FF;
+}
+
+.header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    
+}
+
+.logo{
+    
+    font-size:25px;
+    padding:10px 15px;;
+     margin: 10px 0px 10px 15px;
+    color:#47B5FF;
+    font-weight:bold;
+}
+
+.navbar{
+    
+    margin-right:50px;
+    
+}
+
+.nav__ul {
+    list-style-type: none;
+    display:flex;
+    padding:0px;
+    margin:1px;
+}
+.nav__ul li{
+    
+    padding:15px 20px;
+    
+}
+a{
+ text-decoration-line:none;  
+    color:#47B5FF;
+    font-weight:bold;
+    font-size:17px;
+    }
