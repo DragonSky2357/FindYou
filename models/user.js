@@ -15,7 +15,6 @@ const userSchema = new mongoose.Schema(
 userSchema.statics.create = async function (payload) {
   const hashedPassword = await utils.genPassword(payload.password);
 
-  console.log(hashedPassword);
   const newUser = {
     ...payload,
     password: hashedPassword,

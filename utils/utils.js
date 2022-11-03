@@ -7,6 +7,7 @@ exports.genPassword = async function (payload) {
 
   return new Promise(function (resolve, reject) {
     bcrypt.genSalt(rounds, function (err, salt) {
+      if (err) reject(err);
       bcrypt.hash(payload, salt, function (err, hash) {
         if (err) reject(err);
         resolve(hash);
@@ -15,7 +16,7 @@ exports.genPassword = async function (payload) {
   });
 };
 
-exports.genPassword = async function (inputPassword, userPassword) {
+exports.comparePassword = async function (inputPassword, userPassword) {
   const { ROUNDS } = process.env;
 
   const rounds = parseInt(ROUNDS, 10);

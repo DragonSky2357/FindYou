@@ -53,14 +53,28 @@ router.patch("/:studentId", async (req, res) => {
     if (findUser === null)
       return res.status(404).send({ err: "Not Found User" });
 
-    const updateStudent = await User.updateOne(
+    const updatedUser = await User.updateOne(
       { studentId },
       { $set: studentInfo }
     );
-    return res.json(updateStudent);
+    return res.json(updatedUser);
   } catch (err) {
     res.status(500).send({ err });
   }
 });
 
+// 학생 삭제
+router.delete("/:studentId", async (req, res) => {
+  try {
+    const studentId = parseInt(req.params.studentId);
+
+    const findUser = await User.findOneByStudentid(studentId);
+    if (findUser === null)
+      return res.status(404).send({ err: "Not Found User" });
+
+    const deletedUser = await User.deleteOne({ studentId });
+
+    return res.json(deletedUser);
+  } catch (err) {}
+});
 module.exports = router;
