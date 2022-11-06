@@ -1,5 +1,5 @@
-const mongoose = require("mongoose");
-const utils = require("../utils/utils");
+const mongoose = require('mongoose');
+const utils = require('../utils/utils');
 const userSchema = new mongoose.Schema(
   {
     department: { type: String, required: true },
@@ -33,4 +33,4 @@ userSchema.statics.findOneByStudentid = function (studentId) {
   return this.findOne({ studentId });
 };
 
-module.exports = mongoose.model("User", userSchema);
+module.exports = mongoose.model('User', userSchema);
