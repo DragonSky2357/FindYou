@@ -17,11 +17,10 @@ exports.genPassword = async function (payload) {
 };
 
 exports.comparePassword = async function (inputPassword, userPassword) {
-  const { ROUNDS } = process.env;
-
-  const rounds = parseInt(ROUNDS, 10);
-
   return new Promise(function (resolve, reject) {
-    if (bcrypt.compare(inputPassword, userPassword)) resolve(true);
+    bcrypt.compare(inputPassword, userPassword, function (err, res) {
+      if (err) reject(err);
+      resolve(res);
+    });
   });
 };
