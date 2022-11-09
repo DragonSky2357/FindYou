@@ -1,7 +1,6 @@
 const router = require("express").Router();
 const utils = require("../../utils/utils");
 const User = require("../../models/user");
-const jwt = require("jsonwebtoken");
 
 // Login User
 router.post("/", async (req, res) => {
@@ -11,18 +10,20 @@ router.post("/", async (req, res) => {
     return res.status(200).send({ err: "Require Id or Password" });
 
   try {
-    const user = await User.find({ id });
-    if (!user.length) return res.status(200).send({ err: "User not found!" });
+    const user = await User.findOne({ id });
+    if (!user) return res.status(200).send({ err: "User not found!" });
 
     const comparePassword = await utils.comparePassword(
       password,
-      user[0].password
+      user.password
     );
 
     if (!comparePassword)
       return res.status(200).send({ err: "Wrong Password" });
 
-    res.status(200).json(user);
+    const token = utils.genJWT(user);
+
+    res.status(200).json({ code: 200, message: "token created", token });
   } catch (err) {
     console.log(err);
     res.status(500).send({ err });

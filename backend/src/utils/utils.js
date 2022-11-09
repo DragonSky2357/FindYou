@@ -1,4 +1,5 @@
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 exports.genPassword = async function (payload) {
   const { ROUNDS } = process.env;
@@ -23,4 +24,20 @@ exports.comparePassword = async function (inputPassword, userPassword) {
       resolve(res);
     });
   });
+};
+
+exports.genJWT = function (user) {
+  const { SECRET_KEY, PROVIDER } = process.env;
+
+  const token = jwt.sign(
+    {
+      type: "JWT",
+      department: user.department,
+      studentId: user.studentId,
+    },
+    SECRET_KEY,
+    { expiresIn: "30m", issuer: PROVIDER }
+  );
+
+  return token;
 };
