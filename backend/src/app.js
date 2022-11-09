@@ -18,7 +18,6 @@ mongoose
   .catch((e) => console.error(e));
 
 app.use("/user", require("./api/routes/user"));
-app.use("/login", require("./api/routes/login"));
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);

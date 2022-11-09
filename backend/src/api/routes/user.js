@@ -1,5 +1,7 @@
 const router = require("express").Router();
 const User = require("../../models/user");
+const utils = require("../../utils/utils");
+const { auth } = require("../../middleware/middleware");
 
 // Find All User
 router.get("/", async (req, res) => {
@@ -76,4 +78,41 @@ router.delete("/:studentId", async (req, res) => {
     return res.json(deletedUser);
   } catch (err) {}
 });
+
+// Login User
+router.post("/login", async (req, res) => {
+  const { id, password } = req.body;
+
+  if (!id || !password)
+    return res.status(200).send({ err: "Require Id or Password" });
+
+  try {
+    const user = await User.findOne({ id });
+    if (!user) return res.status(200).send({ err: "User not found!" });
+
+    const comparePassword = await utils.comparePassword(
+      password,
+      user.password
+    );
+
+    if (!comparePassword)
+      return res.status(200).send({ err: "Wrong Password" });
+
+    const token = utils.genJWT(user);
+
+    res.status(200).json({ code: 200, message: "token created", token });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({ err });
+  }
+});
+
+router.post("/payload", auth, (req, res) => {
+  return res.status(200).json({
+    code: 200,
+    message: "token true",
+    data: req.decode,
+  });
+});
+
 module.exports = router;
