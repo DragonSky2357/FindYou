@@ -45,13 +45,13 @@ const Header = styled.div` //Navlogin의 상위 div
  
  justify-content:space-between;
  align-items:center;
- border:2px solid red;
+ 
 `
 const Logo = styled.div` //로고 
  margin: 10px 0px 10px 15px;
  padding:0px;
  p {
- border:1px solid black;
+ 
  font-size:47px;
  font-weight:bold;
  color: #47b5ff;
@@ -62,19 +62,19 @@ const Logo = styled.div` //로고
 const Navbar = styled.div` //Nav전체 div
     
   
-  border:3px solid green;
+  
    margin-right:100px;
    ul {
     padding:0;
     list-style-type: none;
      display:grid;
      grid-template-columns: 1fr 1fr;
-     border:1px solid yellow;
+    
      align-items:center
    }
    li{
     padding:20px 10px;
-    border: 1px solid purple;
+    
     text-align:center;
     
       a{
