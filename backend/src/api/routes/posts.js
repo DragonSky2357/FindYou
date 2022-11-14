@@ -18,7 +18,8 @@ router.get("/", (req, res) => {
 router.get("/:postId", async (req, res) => {
   try {
     const getPost = await Post.findOneByPostid(req.params.postId);
-    if (getPost === null) 
+    console.log(getPost);
+    if (getPost === '[]') 
       return res.status(404).send({ err: "Not Found Post." });
 
     return res.json(getPost);
@@ -38,6 +39,19 @@ router.post("/newposts", async (req, res) => {
   }
 });
 
+router.put("/updateposts", async (req, res) => {
+  try {
+    const postId = parseInt(req.body.postId);
+    const getPost = await Post.findOneByPostid(postId);
+    if (getPost === null)
+      return res.status(404).send({ err: "Not Found Post" });
+
+    const updatePost = await Post.updateOne(req.body);
+  } catch {
+    res.status(500).send({ err })
+  }
+}); 
+
 //http://localhost:3000/posts/deleteposts => delete post by id
 router.delete("/deleteposts/:postId", async (req, res) => {
   try {
@@ -48,7 +62,7 @@ router.delete("/deleteposts/:postId", async (req, res) => {
 
     const deletedPost = await Post.deleteOne({ postId });
 
-    return res.json(deletedPost);
+    return res.json(`Successfully Deleted!`);
   } catch (err) {
     res.status(500).send({ err })
   }
