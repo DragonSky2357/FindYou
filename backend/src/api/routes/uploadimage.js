@@ -20,12 +20,12 @@ const storage = multer.diskStorage({
 const upload = multer({ storage : storage });
 
 router.post('/uploadimg', upload.single('file'), function(req, res) {
-    res.json({ code : 200, data : "Image Uploaded!"});
+    return res.json({ code : 200, data : "Image Uploaded!"});
 })
 
 router.post('/uploadimgs', upload.array('file', 10), function(req, res) {
     console.log(req.files);
-    res.json({ code : 200, data : "Image Uploaded!"});
+    return res.json({ code : 200, data : "Image Uploaded!"});
 })
 
 module.exports = router;

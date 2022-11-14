@@ -20,7 +20,7 @@ mongoose
   .catch((e) => console.error(e));
 
 app.use("/posts", require("../src/api/routes/posts"));
-app.use("/upload", require("../src/api/routes/uploadimage"));
+app.use("/posts", require("../src/api/routes/uploadimage"));
 
 app.listen(PORT, () => {
   console.log(`listening on port http://localhost:${PORT}`);

@@ -39,14 +39,17 @@ router.post("/newposts", async (req, res) => {
   }
 });
 
+//http://localhost:3000/posts/updateposts => Update post by id
 router.put("/updateposts", async (req, res) => {
   try {
     const postId = parseInt(req.body.postId);
     const getPost = await Post.findOneByPostid(postId);
     if (getPost === null)
       return res.status(404).send({ err: "Not Found Post" });
-
-    const updatePost = await Post.updateOne(req.body);
+    
+    const updatePost = await Post.updateOne({ postId : req.body.postId }, { $set : req.body });
+    console.log(updatePost);
+    return res.status(200).send(updatePost);
   } catch {
     res.status(500).send({ err })
   }
