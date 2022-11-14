@@ -7,7 +7,7 @@ router.get("/", (req, res) => {
     .then((posts) => {
       if (!posts.length)
         return res.status(404).send({ err: "Post not found!" });
-      res.send(posts);
+        res.status(200).send(posts);
     })
     .catch((err) => {
       res.status(500).send({ err });
@@ -17,12 +17,10 @@ router.get("/", (req, res) => {
 //http://localhost:3000/posts/:postId => find post by id
 router.get("/:postId", async (req, res) => {
   try {
-    const getPost = await Post.findOneByPostid(req.params.postId);
-    console.log(getPost);
-    if (getPost === '[]') 
-      return res.status(404).send({ err: "Not Found Post." });
-
-    return res.json(getPost);
+    const getPostId = await Post.findOneByPostid(req.params.postId);
+    console.log(getPostId);
+    if (getPostId.length > 0) return res.status(200).send(getPostId);
+    else return res.status(404).send({ err: "Not Found Post." });
   } catch (err) {
     res.status(500).send({ error : err });
   }
@@ -44,12 +42,12 @@ router.put("/updateposts", async (req, res) => {
   try {
     const postId = parseInt(req.body.postId);
     const getPost = await Post.findOneByPostid(postId);
-    if (getPost === null)
-      return res.status(404).send({ err: "Not Found Post" });
-    
-    const updatePost = await Post.updateOne({ postId : req.body.postId }, { $set : req.body });
-    console.log(updatePost);
-    return res.status(200).send(updatePost);
+    if (getPost.length > 0) {
+      const updatePost = await Post.updateOne({ postId : req.body.postId }, { $set : req.body });
+      console.log(updatePost);
+      return res.status(200).send(updatePost);
+    }
+    else return res.status(404).send({ err: "Not Found Post" });
   } catch {
     res.status(500).send({ err })
   }
@@ -60,12 +58,11 @@ router.delete("/deleteposts/:postId", async (req, res) => {
   try {
     const postId = parseInt(req.params.postId);
     const getPost = await Post.findOneByPostid(postId);
-    if (getPost === null)
-      return res.status(404).send({ err: "Not Found Post" });
-
-    const deletedPost = await Post.deleteOne({ postId });
-
-    return res.json(`Successfully Deleted!`);
+    if (getPost.length > 0) {
+      const deletedPost = await Post.deleteOne({ postId });
+      return  res.status(200).send('Successfully Deleted!')
+    }
+    else return res.status(404).send({ err: "Not Found Post" });    
   } catch (err) {
     res.status(500).send({ err })
   }
