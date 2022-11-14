@@ -21,11 +21,9 @@ mongoose
   .catch((e) => console.error(e));
 
 app.use("/user", require("./api/routes/user"));
-app.use("/products", require("./api/routes/products"));
-
 app.use("/posts", require("./api/routes/posts"));
-app.use("/posts", require("./api/routes/uploadimage"));
+app.use("/uploadimage", require("./api/routes/uploadimage"));
 
 app.listen(PORT, () => {
-  console.log(`listening on port http://localhost:${PORT}`);
+  console.log(`listening on port:${PORT}`);
 });
