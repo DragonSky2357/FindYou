@@ -6,7 +6,7 @@ router.get("/", (req, res) => {
   Post.findAll()
     .then((posts) => {
       if (!posts.length)
-        return res.status(404).send({ err: "Post not found!" });
+        return res.status(404).send({ err: "There's no Posts." });
         res.status(200).send(posts);
     })
     .catch((err) => {
@@ -20,7 +20,7 @@ router.get("/:postId", async (req, res) => {
     const getPostId = await Post.findOneByPostid(req.params.postId);
     console.log(getPostId);
     if (getPostId.length > 0) return res.status(200).send(getPostId);
-    else return res.status(404).send({ err: "Not Found Post." });
+    else return res.status(404).send({ err: "Can't find posts." });
   } catch (err) {
     res.status(500).send({ error : err });
   }
@@ -47,7 +47,7 @@ router.put("/updateposts", async (req, res) => {
       console.log(updatePost);
       return res.status(200).send(updatePost);
     }
-    else return res.status(404).send({ err: "Not Found Post" });
+    else return res.status(404).send({ err: "Can't find posts." });
   } catch {
     res.status(500).send({ err })
   }
@@ -62,7 +62,7 @@ router.delete("/deleteposts/:postId", async (req, res) => {
       const deletedPost = await Post.deleteOne({ postId });
       return  res.status(200).send('Successfully Deleted!')
     }
-    else return res.status(404).send({ err: "Not Found Post" });    
+    else return res.status(404).send({ err: "Can't find posts." });    
   } catch (err) {
     res.status(500).send({ err })
   }
