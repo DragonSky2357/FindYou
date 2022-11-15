@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import styled from "styled-components";
 import Navlogin from "./components/Navlogin";
+import Fixdatat from "./components/Fixdata"
 import {BrowserRouter, Route,Routes} from'react-router-dom';
 function App() {
   return (

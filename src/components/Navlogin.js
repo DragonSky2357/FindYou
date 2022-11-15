@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import styled from "styled-components";
 import {Link} from 'react-router-dom';
 
+
 /*  
   <Header> : Navlogin의 상위 div
   <Logo> : 홈페이지 로고
@@ -19,7 +20,7 @@ function Navlogin(props) {
   return (
   <Header> 
     <Logo>
-      <p>{_logo}</p>
+      <Link to "#"><p>{_logo}</p></Link>
     </Logo>   
 
     <Navbar>
