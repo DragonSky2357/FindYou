@@ -7,10 +7,12 @@ const Posts = require('../src/models/posts');
 const app = express();
 const bodyParser = require("body-parser");
 const { PORT, MONGO_URI } = process.env;
+const { swaggerUi, specs } = require("../swagger/swagger")
 
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs))
 
 mongoose.Promise = global.Promise;
 

@@ -1,12 +1,22 @@
 const router = require("express").Router();
 const Post = require("../../models/posts");
 
-//http://localhost:3000/posts/ => find all posts
+/**
+ @swagger
+ paths:
+  /posts:
+    get:
+      summary: 게시글 데이터 전체조회
+      description: 전체 게시글 데이터 조회
+      tags: [posts]
+      responses:
+        "200":
+          description: "전체 게시글 정보 조회 성공"
+ */
 router.get("/", (req, res) => {
   Post.findAll()
     .then((posts) => {
-      if (!posts.length)
-        return res.status(404).send({ err: "There's no Posts." });
+      if (!posts.length) return res.status(404).send({ err: "There's no Posts." });
         res.status(200).send(posts);
     })
     .catch((err) => {
@@ -20,7 +30,7 @@ router.get("/:postId", async (req, res) => {
     const getPostId = await Post.findOneByPostid(req.params.postId);
     console.log(getPostId);
     if (getPostId.length > 0) return res.status(200).send(getPostId);
-    else return res.status(404).send({ err: "Can't find posts." });
+    return res.status(404).send({ err: "Can't find posts." });
   } catch (err) {
     res.status(500).send({ error : err });
   }
@@ -33,7 +43,7 @@ router.post("/newposts", async (req, res) => {
     return res.json(newPost);
   } catch (err) { 
     if(err.code === 11000) res.status(404).send({ err : "Already Exists Posts!"})
-    else res.status(500).send({ err });
+    res.status(500).send({ err });
   }
 });
 
@@ -47,7 +57,7 @@ router.put("/updateposts", async (req, res) => {
       console.log(updatePost);
       return res.status(200).send(updatePost);
     }
-    else return res.status(404).send({ err: "Can't find posts." });
+    return res.status(404).send({ err: "Can't find posts." });
   } catch {
     res.status(500).send({ err })
   }
