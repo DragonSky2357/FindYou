@@ -1,0 +1,16 @@
+.tap-container {
+    display: flex;
+    list-style:none;
+    padding: 3%;
+    justify-content: center;
+}
+
+.tap-item {
+    font-size: 25px;
+    margin: 10px;
+    padding: 10px;
+}
+
+.tap-item:hover {
+    background-color: #bde2fb;
+}
