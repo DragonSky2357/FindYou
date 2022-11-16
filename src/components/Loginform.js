@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 // 전체 화면 Grid 컴포넌트
 const Box = styled.div`
@@ -21,7 +23,7 @@ const Login_header = styled.h1`
     margin-top: 30px;
 `
 // 입력폼, 버튼을 포함하는 컴포넌트
-const Login_form = styled.div`
+const Login_form = styled.form`
     position: relative;
     z-index: 1;
     max-width: 360px;
@@ -47,7 +49,7 @@ const Login_button = styled.button`
     padding: 15px;
     color: #FFFFFF;
     font-size: 14px;
-
+    cursor: pointer;
 `
 // 회원가입 페이지로 연결될 링크 컴포넌트
 const Login_toJoin = styled.p`
@@ -56,21 +58,83 @@ const Login_toJoin = styled.p`
     font-size: 12px;
 `
 
-function Loginform() {
-    return(
+function Loginform(props) {
+    const [id, setId] = useState('');
+    const [pw, setPw] = useState('');
+
+    // 입력한 id 값에 변화가 있을 때마다 input 폼의 value값을 변경
+    const handleInputId = (e) => {
+        setId(e.target.value);
+    };
+
+    // 입력한 pw 값에 변화가 있을 때마다 input 폼의 value값을 변경
+    const handleInputPw = (e) => {
+        setPw(e.target.value);
+    };
+
+    // 로그인 버튼 클릭했을때 실행될 이벤트
+    const onClickLoginButton = () => {
+        console.log("버튼이 클릭되었습니다.")
+        axios.post('43.200.157.167:3000/user/20174041', null, {
+            params: {
+                'user_id': id,
+                'user_pw': pw,
+            }
+        })
+        .then((res)=>{console.log(res)})
+        .catch()
+    };
+
+    /* 아이디 비밀번호가 제출될때 실행되는 이벤트 핸들러
+    const onSubmitEvent = (e) => {
+        e.preventDefault();
+
+        let body = {
+          Id: id,
+          Password: pw,
+        };
+    
+        // action의 반환값을 dispatch
+        dispatch(loginUser(body)).then((response) => {
+          if (response.payload.loginSuccess) {
+            props.history.push('/');
+          } else {
+            alert('Error');
+          }
+        });
+    };*/
+
+    useEffect(()=>{
+        axios.get('경로')
+        .then((res)=>{console.log(res)})
+        .catch()
+    }, [])
+
+    return (
         <Box>
-            {/* <Login_header>로그인</Login_header> */}
-            <Login_Box>
-                <Login_header>로그인</Login_header>
-                <Login_form>
-                    <Login_input type="text" placeholder="아이디를 입력해주세요"></Login_input>
-                    <Login_input type="password" placeholder="비밀번호를 입력해주세요"></Login_input>
-                    <Login_button>LOGIN</Login_button>
-                    <Login_toJoin>회원가입 페이지로 이동</Login_toJoin>
-                </Login_form>
-            </Login_Box>
+          <Login_Box>
+            <Login_header>로그인</Login_header>
+            <Login_form >
+              <Login_input
+                type="text"
+                placeholder="아이디를 입력해주세요"
+                name="input_id"
+                value={id}
+                onChange={handleInputId}
+              ></Login_input>
+              <Login_input
+                type="password"
+                placeholder="비밀번호를 입력해주세요"
+                name="input_pw"
+                value={pw}
+                onChange={handleInputPw}
+              ></Login_input>
+              <Login_button onClick={onClickLoginButton}>LOGIN</Login_button>
+              <Login_toJoin>회원가입 페이지로 이동</Login_toJoin>
+            </Login_form>
+          </Login_Box>
         </Box>
-    );
+      );
 }
 
-export default Loginform;
+export default Loginform
