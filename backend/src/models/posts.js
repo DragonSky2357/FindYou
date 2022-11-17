@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const postsSchema = new mongoose.Schema(
     {
-        postId : { required : true, type : Number, unique : true },
+        userId : { type : String, unique : true, required : true },
         img : { type : String },
         title : { type : String, required : true },
         contents : { type : String, required : true },
@@ -11,14 +11,12 @@ const postsSchema = new mongoose.Schema(
     }, 
     { timestamps : true }
 );
+
 postsSchema.statics.create = async function (payload) {
-  
     const newPosts = {
       ...payload,
     };
-  
     const post = new this(newPosts);
-  
     return post.save();
   };
 

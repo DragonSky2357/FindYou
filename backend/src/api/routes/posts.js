@@ -1,17 +1,6 @@
 const router = require("express").Router();
 const Post = require("../../models/posts");
 
-/**
- * @swagger
- *  /posts:
- *    get:
- *      tags:
- *      - posts
- *      description: 모든 게시글 조회     
- *      responses:
- *       200:
- *        description: 게시글 조회 성공
- */
 router.get("/", (req, res) => {
   Post.findAll()
     .then((posts) => {
@@ -23,18 +12,23 @@ router.get("/", (req, res) => {
     });
 });
 
-router.get("/:postId", async (req, res) => {
+router.get("/:content", async (req, res) => {
   try {
-    const getPostId = await Post.findOneByPostid(req.params.postId);
-    console.log(getPostId);
-    if (getPostId.length > 0) return res.status(200).send(getPostId);
+    const getPostbyString = await Post.find({
+        $or : [
+        { title : RegExp(req.params.content) },
+        { contents : RegExp(req.params.content) },
+        { writer : RegExp(req.params.content) },
+        { location : RegExp(req.params.content) }
+      ]});
+    if (getPostbyString.length > 0) return res.status(200).send(getPostbyString);
     return res.status(404).send({ err: "Can't find posts." });
   } catch (err) {
     res.status(500).send({ error : err });
   }
 });
 
-router.post("/newposts", async (req, res) => {
+router.post("/", async (req, res) => {
   try {
     const newPost = await Post.create(req.body);
     return res.json(newPost);
@@ -44,7 +38,7 @@ router.post("/newposts", async (req, res) => {
   }
 });
 
-router.put("/updateposts", async (req, res) => {
+router.put("/:postId", async (req, res) => {
   try {
     const postId = parseInt(req.body.postId);
     const getPost = await Post.findOneByPostid(postId);
@@ -60,7 +54,7 @@ router.put("/updateposts", async (req, res) => {
 }); 
 
 //http://localhost:3000/posts/deleteposts => delete post by id
-router.delete("/deleteposts/:postId", async (req, res) => {
+router.delete("/:postId", async (req, res) => {
   try {
     const postId = parseInt(req.params.postId);
     const getPost = await Post.findOneByPostid(postId);
