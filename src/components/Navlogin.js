@@ -1,5 +1,5 @@
 import React, {useState } from 'react';
-import styled,{} from "styled-components";
+import styled from "styled-components";
 import {Link} from 'react-router-dom';
 
 
@@ -14,10 +14,13 @@ import {Link} from 'react-router-dom';
 /   3. 로그인시 nav상태 바뀌기  로그인, 회원가입 -> 로그아웃 개인정보창
 */
 
-function Navlogin(props) {
-   const [_logo, setLogo] = useState(props.logo); //Logo의 props
-   const [_sign, setSign] = useState(props.sign); //Navbar sign props, setEffect?
-   const[_account,setAccount] = useState(props.account); //Navbar account props, setEffect?
+
+function Navlogin(props) 
+ { 
+  
+   const [_logo, setLogo] = useState("SW"); //Logo의 props
+   const [_sign, setSign] = useState("로그인"); //Navbar sign props, setEffect?
+   const[_account,setAccount] = useState("회원가입"); //Navbar account props, setEffect?
   return ( 
     
     <Header>  
@@ -26,15 +29,17 @@ function Navlogin(props) {
     </Logo>   
 
     <Navbar>
+      
       <ul>
         <li><Link to="#">{_sign}</Link></li>
         <li><Link to="#">{_account}</Link></li>
+        
       </ul>
+      
     </Navbar>
-  </Header>
- 
+    </Header>
   );
-}
+  }
 
 export default Navlogin;
 

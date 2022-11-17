@@ -4,15 +4,15 @@ import Navlogin from "./components/Navlogin";
 import Fixdatat from "./components/Fixdata"
 import {BrowserRouter, Route,Routes} from'react-router-dom';
 
+
 const myID = createContext();
-const [isLogin,setLogin] = useState(false);
 
 
 function App() {
   return (
     <div className="App">
       <BrowserRouter>
-      <Navlogin logged={isLogin} onLogout></Navlogin>
+      <Navlogin ></Navlogin>
       </BrowserRouter>
     </div>
   );
