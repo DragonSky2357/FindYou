@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import styled from "styled-components";
+import React, {useState } from 'react';
+import styled,{} from "styled-components";
 import {Link} from 'react-router-dom';
 
 
@@ -13,14 +13,16 @@ import {Link} from 'react-router-dom';
     2. 반응형수치
 /   3. 로그인시 nav상태 바뀌기  로그인, 회원가입 -> 로그아웃 개인정보창
 */
+
 function Navlogin(props) {
    const [_logo, setLogo] = useState(props.logo); //Logo의 props
    const [_sign, setSign] = useState(props.sign); //Navbar sign props, setEffect?
    const[_account,setAccount] = useState(props.account); //Navbar account props, setEffect?
-  return (
-  <Header> 
+  return ( 
+    
+    <Header>  
     <Logo>
-      <Link to "#"><p>{_logo}</p></Link>
+      <p>{_logo}</p>
     </Logo>   
 
     <Navbar>
@@ -30,8 +32,8 @@ function Navlogin(props) {
       </ul>
     </Navbar>
   </Header>
-    
-  )
+ 
+  );
 }
 
 export default Navlogin;
