@@ -7,10 +7,10 @@ function Fixdata() {
       <Fix_item>
       <li><Fix_p>학번 : 정보</Fix_p></li>
       <li><Fix_p>아이디 : 정보</Fix_p></li>
-      <li>학과<Fix_button type="button">수정</Fix_button></li>  
-      <li>비밀번호<Fix_button type="button">수정</Fix_button></li>  
-      <li>이메일<Fix_button type="button">수정</Fix_button></li>  
-      <li>닉네임<Fix_button type="button">수정</Fix_button></li>   
+      <li>학과<Fix_button type="button">수정</Fix_button></li>  {/*Fixdata_depart로 넘어감 */}
+      <li>비밀번호<Fix_button type="button">수정</Fix_button></li> {/*Fixdate_password로 넘어감 */}
+      <li>이메일<Fix_button type="button">수정</Fix_button></li>  {/*Fixdate_email로 넘어감 */}
+      <li>닉네임<Fix_button type="button">수정</Fix_button></li>   {/*Fixdate_nickname로 넘어감*/}
       </Fix_item>
     </Fix_box>
   )
