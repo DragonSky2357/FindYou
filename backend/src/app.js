@@ -1,11 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
-const Posts = require('../src/models/posts');
-//const cors = require("cors");
-
 const app = express();
-const bodyParser = require("body-parser");
 const { PORT, MONGO_URI } = process.env;
 const { swaggerUi, specs } = require("../swagger/swagger")
 

@@ -2,16 +2,15 @@ const router = require("express").Router();
 const Post = require("../../models/posts");
 
 /**
- @swagger
- paths:
-  /posts:
-    get:
-      summary: 게시글 데이터 전체조회
-      description: 전체 게시글 데이터 조회
-      tags: [posts]
-      responses:
-        "200":
-          description: "전체 게시글 정보 조회 성공"
+ * @swagger
+ *  /posts:
+ *    get:
+ *      tags:
+ *      - posts
+ *      description: 모든 게시글 조회     
+ *      responses:
+ *       200:
+ *        description: 게시글 조회 성공
  */
 router.get("/", (req, res) => {
   Post.findAll()
@@ -24,7 +23,6 @@ router.get("/", (req, res) => {
     });
 });
 
-//http://localhost:3000/posts/:postId => find post by id
 router.get("/:postId", async (req, res) => {
   try {
     const getPostId = await Post.findOneByPostid(req.params.postId);
@@ -36,7 +34,6 @@ router.get("/:postId", async (req, res) => {
   }
 });
 
-//http://localhost:3000/posts/newposts => new post
 router.post("/newposts", async (req, res) => {
   try {
     const newPost = await Post.create(req.body);
@@ -47,7 +44,6 @@ router.post("/newposts", async (req, res) => {
   }
 });
 
-//http://localhost:3000/posts/updateposts => Update post by id
 router.put("/updateposts", async (req, res) => {
   try {
     const postId = parseInt(req.body.postId);
