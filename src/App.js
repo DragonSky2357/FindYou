@@ -1,7 +1,8 @@
 import React from "react";
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
 
-
+import Tap from './Component/Tap.js'
+import Search from './Component/Search.js'
 
 import Home from './Page/Home.js'
 import GapLectOrNoLect from './Page/GapLectOrNoLect'
@@ -12,12 +13,13 @@ function App() {
   return (
     <>
       <BrowserRouter>
-            <Routes>
-                <Route path="/" element={<Home/>} exact/>
-                
-                <Route path="/GapLectOrNoLect" element={<GapLectOrNoLect/>}/>
-                <Route path="/DeliverTogether" element={<DeliverTogether/>}/>
-            </Routes>
+        <Search/>
+        <Tap/>
+        <Routes>
+            <Route path="/" element={<Home/>} exact/>
+            <Route path="/GapLectOrNoLect" element={<GapLectOrNoLect/>}/>
+            <Route path="/DeliverTogether" element={<DeliverTogether/>}/>
+        </Routes>
       </BrowserRouter>
     </>
   );
