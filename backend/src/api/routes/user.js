@@ -3,6 +3,41 @@ const User = require("../../models/user");
 const utils = require("../../utils/utils");
 const { auth } = require("../../middleware/middleware");
 
+/**
+ * @swagger
+ * paths:
+ *  /user/nickname:
+ *   post:
+ *    tags:
+ *    - user
+ *    description: 닉네임 조회
+ *    parameters:
+ *    - in: body
+ *      name: body
+ *      required: true
+ *      schema:
+ *       properties:
+ *        id:
+ *         type: string
+ *        pw:
+ *         type: string
+ *
+ *    responses:
+ *     200:
+ *      description: 닉네임 조회 성공
+ *      schema:
+ *       properties:
+ *        message:
+ *         type: string
+ *     401:
+ *      description: 닉네임 조회 실패
+ *      schema:
+ *       properties:
+ *        message:
+ *         type: string
+ *
+ */
+
 // Find All User
 router.get("/", async (req, res) => {
   try {
