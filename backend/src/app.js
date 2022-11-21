@@ -28,9 +28,9 @@ app.use("/api-docs",swaggerUi.serve,swaggerUi.setup(specs));
  *    name: User
  *    description: 유저 회원가입 및 로그인
 */
-app.use("/user", require("./api/routes/user"));
-app.use("/posts", require("./api/routes/posts"));
-app.use("/uploadimage", require("./api/routes/uploadimage"));
+app.use("/api/user", require("./api/routes/user"));
+app.use("/api/posts", require("./api/routes/posts"));
+app.use("/api/posts/uploadimage", require("./api/routes/uploadimage"));
 
 app.listen(PORT, () => {
   console.log(`listening on http://localhost:${PORT}`);

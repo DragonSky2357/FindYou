@@ -132,7 +132,7 @@ router.get("/:studentId", async (req, res) => {
  *      
  *      requestBody:
  *        description: 회원가입 정보
- *        required: ture
+ *        required: true
  *        content:
  *          application/json:
  *            schema:

@@ -1,6 +1,51 @@
 const router = require("express").Router();
 const Post = require("../../models/posts");
+const utils = require("../../utils/utils");
 const { auth } = require("../../middleware/middleware");
+
+/** 
+  * @swagger 
+  * paths: 
+  *  /posts: 
+  *   get: 
+  *    tags: 
+  *    - Posts
+  *    description: 모든 게시글 정보 가져오기 
+  *    responses: 
+  *     200: 
+  *      description: 모든 게시글 정보 
+  *      content: 
+  *        application/json: 
+  *          schema: 
+  *            type: object 
+  *            properties: 
+  *              sucess: 
+  *                type: boolean 
+  *                example: true 
+  *              message: 
+  *                type: string 
+  *                example: "Get Posts Sucess" 
+  *              data: 
+  *                type: object 
+  *                example: [{"title":"find you!","contents":"please find me!","userId":"20175129","img":"이미지.img", "location" : "빽다방"}] 
+  *       
+  *     401: 
+  *      description: 게시글 조회 실패 
+  *      content: 
+  *        application/json: 
+  *          schema: 
+  *            type: object 
+  *            properties: 
+  *              sucess: 
+  *                type : boolean 
+  *                example: false 
+  *              message: 
+  *                type: string 
+  *                example: "Get Posts Failed" 
+  *       
+  * 
+  */ 
+
 
 router.get("/", (req, res) => {
   Post.findAll()
@@ -29,6 +74,46 @@ router.get("/:content", async (req, res) => {
   }
 });
 
+/**
+ * @swagger
+ *  /posts/new:
+ *    post:
+ *      tags:
+ *      - posts
+ *      description: 게시글 작성
+ *      
+ *      requestBody:
+ *        description: 게시글 정보
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                title:
+ *                  type: string
+ *                  description: "제목"
+ * 
+ *                contents:
+ *                  type: String
+ *                  description: "내용"
+ *            
+ *                userId:
+ *                  type: string
+ *                  description: "유저 아이디"
+ * 
+ *                img:
+ *                  type: string
+ *                  description: "이미지 경로"
+ *                
+ *                location:
+ *                  type: string
+ *                  description: "분실 및 습득 장소"
+ * 
+ *        
+ *
+ */
+
 router.post("/new", async (req, res) => {
   try {
     const newPost = await Post.create(req.body);
@@ -39,7 +124,7 @@ router.post("/new", async (req, res) => {
   }
 });
 
-router.patch("/:userId", async (req, res, err) => {
+router.patch("/", async (req, res, err) => {
   try {
     const userId = req.body.userId;
     const getPost = await Post.findByuserId(userId);
