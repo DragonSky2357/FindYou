@@ -1,4 +1,0 @@
-{
-    "ignore":["../src/models/*"],
-    "exec" : "node backend/src/app.js"
-}
