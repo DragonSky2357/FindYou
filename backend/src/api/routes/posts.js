@@ -54,7 +54,7 @@ router.patch("/:userId", async (req, res, err) => {
   }
 }); 
 
-router.delete("/", async (req, res) => {
+router.delete("/", auth, async (req, res) => {
   try {
     const getPost = await Post.find( req.body );
     if (getPost.length > 0) {
