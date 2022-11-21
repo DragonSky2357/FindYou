@@ -1,12 +1,11 @@
 const mongoose = require('mongoose');
 
 const postsSchema = new mongoose.Schema(
-    {
-        userId : { type : String, unique : true, required : true },
-        img : { type : String },
+    { 
         title : { type : String, required : true },
         contents : { type : String, required : true },
-        writer : { type : String, required : true },
+        userId : { type : String, required : true },
+        img : { type : String },
         location : { type : String }
     }, 
     { timestamps : true }
@@ -24,8 +23,12 @@ postsSchema.statics.findAll = function () {
     return this.find({});
 };
 
-postsSchema.statics.findOneByPostid = function (postId) {
-    return this.find({postId});
+postsSchema.statics.findOneByuserId = function (userId) {
+    return this.find({ userId });
+};
+
+postsSchema.statics.findByuserId = function (userId) {
+    return this.find({ userId });
 };
 
 module.exports =  mongoose.model('Posts', postsSchema);

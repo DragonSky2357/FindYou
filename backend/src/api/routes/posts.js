@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const Post = require("../../models/posts");
+const { auth } = require("../../middleware/middleware");
 
 router.get("/", (req, res) => {
   Post.findAll()
@@ -18,7 +19,7 @@ router.get("/:content", async (req, res) => {
         $or : [
         { title : RegExp(req.params.content) },
         { contents : RegExp(req.params.content) },
-        { writer : RegExp(req.params.content) },
+        { userId : RegExp(req.params.content) },
         { location : RegExp(req.params.content) }
       ]});
     if (getPostbyString.length > 0) return res.status(200).send(getPostbyString);
@@ -28,7 +29,7 @@ router.get("/:content", async (req, res) => {
   }
 });
 
-router.post("/", async (req, res) => {
+router.post("/new", async (req, res) => {
   try {
     const newPost = await Post.create(req.body);
     return res.json(newPost);
@@ -38,12 +39,12 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.put("/:postId", async (req, res) => {
+router.patch("/:userId", async (req, res, err) => {
   try {
-    const postId = parseInt(req.body.postId);
-    const getPost = await Post.findOneByPostid(postId);
+    const userId = req.body.userId;
+    const getPost = await Post.findByuserId(userId);
     if (getPost.length > 0) {
-      const updatePost = await Post.updateOne({ postId : req.body.postId }, { $set : req.body });
+      const updatePost = await Post.updateOne({ userId : req.body.userId }, { $set : req.body });
       console.log(updatePost);
       return res.status(200).send(updatePost);
     }
@@ -53,13 +54,14 @@ router.put("/:postId", async (req, res) => {
   }
 }); 
 
-//http://localhost:3000/posts/deleteposts => delete post by id
-router.delete("/:postId", async (req, res) => {
+router.delete("/", async (req, res) => {
   try {
-    const postId = parseInt(req.params.postId);
-    const getPost = await Post.findOneByPostid(postId);
+    console.log(req.body);
+    const getPost = await Post.find( req.body );
+    console.log(getPost);
     if (getPost.length > 0) {
-      const deletedPost = await Post.deleteOne({ postId });
+      const deletedPost = await Post.deleteOne( req.body );
+      console.log(deletedPost);
       return  res.status(200).send('Successfully Deleted!')
     }
     else return res.status(404).send({ err: "Can't find posts." });    
