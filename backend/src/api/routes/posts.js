@@ -56,9 +56,7 @@ router.patch("/:userId", async (req, res, err) => {
 
 router.delete("/", async (req, res) => {
   try {
-    console.log(req.body);
     const getPost = await Post.find( req.body );
-    console.log(getPost);
     if (getPost.length > 0) {
       const deletedPost = await Post.deleteOne( req.body );
       console.log(deletedPost);
