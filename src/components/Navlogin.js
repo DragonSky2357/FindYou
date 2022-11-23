@@ -17,10 +17,12 @@ import {Link} from 'react-router-dom';
 
 function Navlogin(props) 
  { 
-  
+  const [isLogin,setLogin] =useState(true);
    const [_logo, setLogo] = useState("SW"); //Logo의 props
    const [_sign, setSign] = useState("로그인"); //Navbar sign props, setEffect?
    const[_account,setAccount] = useState("회원가입"); //Navbar account props, setEffect?
+   
+   
   return ( 
     
     <Header>  
@@ -29,13 +31,20 @@ function Navlogin(props)
     </Logo>   
 
     <Navbar>
-      
+     { isLogin === false ?
+
       <ul>
         <li><Link to="#">{_sign}</Link></li>
         <li><Link to="#">{_account}</Link></li>
         
       </ul>
+      : 
+      <ul>
+      <li><Link to="#">로그아웃</Link></li>
+      <li><Link to="#">정보수정</Link></li>
       
+    </ul>
+      }
     </Navbar>
     </Header>
   );

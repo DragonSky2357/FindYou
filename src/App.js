@@ -11,7 +11,10 @@ const myID = createContext();
 function App() {
   return (
     <div className="App">
-      <Fixdata></Fixdata>
+      <BrowserRouter>
+      <Navlogin></Navlogin>
+      </BrowserRouter>
+     {/* <Fixdata></Fixdata>*/}
     </div>
   );
 }

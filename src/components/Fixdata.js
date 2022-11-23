@@ -14,47 +14,55 @@ import axios from 'axios';
 
  function Fixdata() {
   const [_data,setData]=useState([]);
-  const [_student,setSu]=useState();
-  const [_id,setId]=useState(); //아이디
-  const[_department,setDe] = useState(); // 학과
-  const [_email,setEmail] = useState(); //이메일
-  const [_password,setPass] = useState();  //패스워드
-  const [_nickname,setNick] = useState();
+  const [_student,setSu]=useState(""); 
+  const [_id,setId]=useState(""); //아이디
+  const[_department,setDe] = useState(""); // 학과
+  const [_email,setEmail] = useState(""); //이메일
+  const [_password,setPass] = useState("");  //패스워드
+  const [_nickname,setNick] = useState("");
 
 
-  //보류
-  const Resource = (data) => {
-    console.log("data는",data.studentId);
-    setSu(data.studentId);
-    console.log("받아온 studentid는",_student);
-    setId(data.id);
-    setDe(data.department);
-    setEmail(data.email);
-    setPass(data.password);
-    setNick(data.nickname);
-                      
-  }
 
   
-  const onChanged = () =>{
+  const onChanged = () => {
     
-    console.log("변경값",_department);
-    console.log("닉네임변경값",_nickname);
-    if(_data.department != _department)
-    {axios.patch('/user/20175129',{
-       "department" : _department
+      if( _department !== _data.department)
+      { 
+        console.log("학과 값이 바뀝니다");
+        axios.patch('/user/20175129',{
+         "department" : _department,
+        })
+        .then((res)=>console.log(res.data));
+      }
+
+
+      if( _nickname !== _data.nickname)
+      {
+        console.log("닉네임 값이 바뀝니다.");
+        axios.patch('/user/20175129',{
+          "nickname" : _nickname
+      })
+        .then((res)=>console.log(res.data));
+       }
+      
+       if(_email !== _data.email )
+       {
+        console.log("이메일 값이 바뀝니다.");
+        axios.patch('/user/20175129',{
+          "email" : _email
+        })
+         .then((res)=>console.log(res.data));
+       }
        
-     })
-    .then((response)=>{console.log(response.data)});
-    }
-    if(_data.nickname != _nickname)
-    {
-      axios.patch('/user/20175129',{
-        "nickname" : _nickname
-      }).
-      then((res)=>console.log(res.data));
-    }
-    
+       if( _password !== "")
+       {
+        console.log("비밀번호 값이 바뀝니다.");
+        axios.patch('/user/20175129',{
+          "password" : _password
+        })
+        .then((res)=>console.log(res.data));
+       }
+       window.location.reload();
   };
 
   const changedSubmit=(e)=>{
@@ -78,33 +86,38 @@ import axios from 'axios';
                       setId(response.data.id);
                       setDe(response.data.department);
                       setEmail(response.data.email);
-                      setPass(response.data.password);
+                      
                       setNick(response.data.nickname);
   
                       })
   .catch((error)=>{console.log(error);});
- },[])
+  },[]);
   
   return (
-    <div className="fixdata">
-      <p>회원정보 수정 </p>
+    <Fix_box>
+      <Title>회원정보 수정</Title>
 
-      <form name="fix" onSumbit={changedSubmit}  >
-          <p>학번 : {_student}</p> 
-          <p>아이디 : {_id}</p>
-          <p>학과 :<span>{_department}</span> <input type="text" value={_department} name="department" onChange={(e)=>setDe(e.target.value)} ></input></p>
-          <p>닉네임: {_nickname} <input type="text" value={_nickname} name="nickname" onChange={(e)=>setNick(e.target.value)}></input></p>
-          <p>비밀번호:{_password}<input type="password"></input></p>
-          <button type="button" onClick={onChanged}>수정</button>
-          <input type="submit" value="Submit" />
+      <form name="fix">
+        <Fix_item>
+          <li><Fix_p>학번 : {_data.studentId}</Fix_p></li>
+          <li><Fix_p>아이디 : {_data.id}</Fix_p> </li>
+          <li><Fix_p>학과 : </Fix_p><Fix_input type="text" value={_department} name="department" onChange={(e)=>setDe(e.target.value)}></Fix_input></li>         
+          <li><Fix_p>닉네임 : </Fix_p> <Fix_input type="text" value={_nickname} name="nickname" onChange={(e)=>setNick(e.target.value)}></Fix_input></li>
+          <li><Fix_p>이메일 : </Fix_p> <Fix_input type="text" value={_email} name="email" onChange={(e)=>setEmail(e.target.value)}></Fix_input></li>
+          <li><Fix_p>비밀번호 : </Fix_p><Fix_input type="password" value={_password} name="password" onChange={(e)=>{setPass(e.target.value);}}></Fix_input></li>
+          
+          <li><Fix_button type="button" onClick={onChanged}>취소</Fix_button>
+              <Fix_button type="button" onClick={onChanged}>수정</Fix_button></li>
+        </Fix_item>
+          {/*<input type="submit" value="Submit" />*/}
       </form>
-    </div>
+   </Fix_box>
   )
 }
       
 export default Fixdata;
 
-/*const Fix_box = styled.div`
+const Fix_box = styled.div`
   position: absolute;
   top:50%;
   left:50%;
@@ -127,7 +140,8 @@ color:#47b5ff;
 `
 const Fix_p = styled.p`
  font-size:15px;
- font-weight:normal;
+ width:300px; 
+
  `
 const Fix_item = styled.ul`
   border:1px solid #47b5ff;
@@ -144,14 +158,28 @@ const Fix_item = styled.ul`
    
    height:50px;
    display:grid;
-   grid-template-columns: 100px 60px;
+   grid-template-columns: 75px 180px;
    grid-template-rows: 50px;
-   justify-content: space-between;
+   
    align-items:center;
    padding:0 15px 0 30px;
  }
 `
+
+const Fix_input = styled.input`
+  padding-left:10px;
+  height:25px;
+  `
+
+
+
+
 const Fix_button = styled.button`
-  height:34px;
+  
+  height:30px;
+  width:70px;
+  margin-left:100px;
+  margin-right:50px;
+  
 `
-*/
+
