@@ -19,6 +19,7 @@ function App() {
   return (
     <>
       <BrowserRouter>
+        <Navlogin/>
         <Search/>
         <Tap/>
         <Routes>
