@@ -5,7 +5,6 @@ import Fixdata from "./components/Fixdata"
 import {BrowserRouter, Route,Routes} from'react-router-dom';
 
 
-const myID = createContext();
 
 
 function App() {
@@ -14,7 +13,8 @@ function App() {
       <BrowserRouter>
       <Navlogin></Navlogin>
       </BrowserRouter>
-     {/* <Fixdata></Fixdata>*/}
+   
+
     </div>
   );
 }

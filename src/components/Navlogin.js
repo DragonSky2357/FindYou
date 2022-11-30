@@ -1,7 +1,7 @@
 import React, {useState } from 'react';
 import styled from "styled-components";
 import {Link} from 'react-router-dom';
-
+import Fixdata from "./Fixdata"
 
 /*  
   <Header> : Navlogin의 상위 div
@@ -18,24 +18,20 @@ import {Link} from 'react-router-dom';
 function Navlogin(props) 
  { 
   const [isLogin,setLogin] =useState(true);
-   const [_logo, setLogo] = useState("SW"); //Logo의 props
-   const [_sign, setSign] = useState("로그인"); //Navbar sign props, setEffect?
-   const[_account,setAccount] = useState("회원가입"); //Navbar account props, setEffect?
-   
-   
+    
   return ( 
     
     <Header>  
     <Logo>
-      <p>{_logo}</p>
+      <p>SW</p>
     </Logo>   
 
     <Navbar>
      { isLogin === false ?
 
       <ul>
-        <li><Link to="#">{_sign}</Link></li>
-        <li><Link to="#">{_account}</Link></li>
+        <li><Link to="#">로그인</Link></li>
+        <li><Link to="#">회원가입</Link></li>
         
       </ul>
       : 

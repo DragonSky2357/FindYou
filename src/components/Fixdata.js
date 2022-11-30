@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
+
   //useEffect로 axios get구현 -> 학번 , 아이디
   //Fix_item을 학번정보로 모두 바꿈
   //나머지 submit
@@ -65,16 +66,7 @@ import axios from 'axios';
        window.location.reload();
   };
 
-  const changedSubmit=(e)=>{
-    e.preventDefault();
-    console.log("변경값",_department);
-    console.log("닉네임변경값",_nickname);
-    axios.patch('/user/20175129',{
-      "department" : _department,
-      "nickname" : _nickname
-    })
-    .then((response)=>{console.log(response.data);})
-  };
+
   useEffect( ()=>
   {
     axios.get('/user/20175129')
@@ -109,7 +101,7 @@ import axios from 'axios';
           <li><Fix_button type="button" onClick={onChanged}>취소</Fix_button>
               <Fix_button type="button" onClick={onChanged}>수정</Fix_button></li>
         </Fix_item>
-          {/*<input type="submit" value="Submit" />*/}
+          
       </form>
    </Fix_box>
   )
@@ -122,7 +114,8 @@ const Fix_box = styled.div`
   top:50%;
   left:50%;
   margin:-250px 0 0 -250px;
-  border : 1px solid  #47b5ff;
+  border:2px solid #47b5ff;
+  border-radius:5px;
   height:500px;
   width:500px;
   
@@ -130,6 +123,7 @@ const Fix_box = styled.div`
 display:grid;
 `
 const Title = styled.p`
+
 color:#47b5ff;
  font-size:40px;
  font-weight:bold;
@@ -144,7 +138,7 @@ const Fix_p = styled.p`
 
  `
 const Fix_item = styled.ul`
-  border:1px solid #47b5ff;
+  border-top:1px solid #47b5ff;
   padding:0px;
   
   display:grid;
@@ -169,17 +163,20 @@ const Fix_item = styled.ul`
 const Fix_input = styled.input`
   padding-left:10px;
   height:25px;
+  width: 250px;
   `
 
 
 
 
 const Fix_button = styled.button`
-  
+  background-color:#47b5ff;
+  border:none;
+  color:white;
   height:30px;
   width:70px;
   margin-left:100px;
   margin-right:50px;
-  
+  border-radius:5px;
 `
 
